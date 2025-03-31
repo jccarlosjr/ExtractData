@@ -1,52 +1,77 @@
-function cleanNonNumeric(i) {
-    return i.replace(/\D/g, '');
+function cleanNonNumeric(input) {
+    return input.replace(/\D/g, '');
 }
 
-function splitValues(i) {
-    let [v1, v2] = i.split('/').map(v => v.trim());
-    return { v1, v2 };
+function splitValues(input) {
+    let [value1, value2] = input.split('/').map(v => v.trim());
+    return { value1, value2 };
 }
 
-function parsePercentage(i) {
-    let s = i.replace("%", "").replace(",", ".");
-        let v = parseFloat(s);
-    return v;
+function parsePercentage(input) {
+    let sanitized = input.replace("%", "").replace(",", ".");
+        let value = parseFloat(sanitized);
+    return value;
 }
 
-function parseCurrency(i) {
-    let s = i.replace("R$", "").trim().replace(",", ".");
-        let v = parseFloat(s);
-    return v;
+function parseCurrency(input) {
+    let sanitized = input.replace("R$", "").trim().replace(",", ".");
+        let value = parseFloat(sanitized);
+    return value;
 }
 
 function getCards() {
-    let div = document.querySelector("#tableConsult > article > div.card-header.text-nowrap.h-px-170.contratos");
-    let cards = div.querySelectorAll("div.card.mb-4");
-    let r = [];
+    let div_contratos = document.querySelector("#tableConsult > article > div.card-header.text-nowrap.h-px-170.contratos");
+    let cards = div_contratos.querySelectorAll("div.card.mb-4");
 
-    cards.forEach((card, i) => {
-        let x = i + 2;
-        let b = card.querySelector(`div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(1) > div > div > small`)?.textContent.trim() || null;
-        let c = card.querySelector(`div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(2) > div > div > small`)?.textContent.trim() || null;
-        let t = card.querySelector(`div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(3) > div > div > small`)?.textContent.trim() || null;
-        let p = card.querySelector(`div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(5) > div > div > small`)?.textContent.trim() || null;
-        let pz = card.querySelector(`div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(6) > div > div > small`)?.textContent.trim() || null;
-        let a = null;
-        let tt = null;
+    let results = [];
 
-        if (pz) {
-            ({ value1: a, value2: tt } = splitValues(pz));
+    cards.forEach((card, index) => {
+        let x = index + 2;
+
+        let bank = card.querySelector(
+            `div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(1) > div > div > small`
+        )?.textContent.trim() || null;
+
+        let contract = card.querySelector(
+            `div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(2) > div > div > small`
+        )?.textContent.trim() || null;
+
+        let taxa = card.querySelector(
+            `div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(3) > div > div > small`
+        )?.textContent.trim() || null;
+
+        let parcela = card.querySelector(
+            `div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(5) > div > div > small`
+        )?.textContent.trim() || null;
+
+        let prazos = card.querySelector(
+            `div:nth-child(${x}) > div.card-body > div.row.g-1 > div:nth-child(6) > div > div > small`
+        )?.textContent.trim() || null;
+
+        let aberto = null;
+        let total = null;
+
+        if (prazos) {
+            ({ value1: aberto, value2: total } = splitValues(prazos));
         }
 
-        b = cleanNonNumeric(b);
-        t = parsePercentage(t);
-        p = parseCurrency(p);
-        a = parseInt(a);
-        tt = parseInt(tt);
-        r.push({b,c,t,p,a,tt});
+        bank = cleanNonNumeric(bank);
+        taxa = parsePercentage(taxa);
+        parcela = parseCurrency(parcela);
+        aberto = parseInt(aberto);
+        total = parseInt(total);
+
+        results.push({
+            bank,
+            contract,
+            taxa,
+            parcela,
+            aberto,
+            total
+        });
     });
 
-    return r;
+    return results;
 }
 
 
