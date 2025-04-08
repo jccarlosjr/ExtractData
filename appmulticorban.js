@@ -1,8 +1,6 @@
-const url = "https://cdn.jsdelivr.net/gh/jccarlosjr/ExtractData@main/new_exp.json";
-
 
 try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch("https://cdn.jsdelivr.net/gh/jccarlosjr/ExtractData@main/new_exp.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Erro ao buscar repositório.");
 
     const data = await response.json();
