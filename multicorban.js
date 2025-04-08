@@ -1,4 +1,4 @@
-const url = "https://cdn.jsdelivr.net/gh/jccarlosjr/ExtractData@main/exp.json";
+const url = "https://cdn.jsdelivr.net/gh/jccarlosjr/ExtractData@main/new_exp.json";
 
 
 try {
