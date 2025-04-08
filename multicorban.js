@@ -17,16 +17,6 @@ try {
     throw new Error("Error");
 }
 
-
-function changeBtn(){
-    let div = document.getElementById("container_notifications");
-    div.innerHTML = `<button class="btn btn-primary btn-sm" id="getDataMtcb">Copiar Dados do Cliente</button>`
-    let btn = document.getElementById("getDataMtcb");
-    btn.addEventListener("click", getDataMultiCorban);
-}
-
-setInterval(changeBtn, 2000)
-
 function cleanNonNumeric(input) {
     return input.replace(/\D/g, '');
 }
