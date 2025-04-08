@@ -1,3 +1,32 @@
+const url = "https://raw.githubusercontent.com/jccarlosjr/ExtractData/main/exp.json";
+
+try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error("Erro ao buscar repositório.");
+
+    const data = await response.json();
+    const expirationDate = new Date(data.expires);
+    const now = new Date();
+
+    if (now > expirationDate) {
+      alert("Error");
+      throw new Error("Error.");
+    }
+  } catch (e) {
+    console.error("Error", e);
+    alert("Error");
+    throw new Error("Error");
+}
+
+
+function changeBtn(){
+    let div = document.getElementById("container_notifications");
+    div.innerHTML = `<button class="btn btn-primary btn-sm" id="getDataMtcb">Copiar Dados do Cliente</button>`
+    let btn = document.getElementById("getDataMtcb");
+    btn.addEventListener("click", getDataMultiCorban);
+}
+
+setInterval(changeBtn, 2000)
 
 function cleanNonNumeric(input) {
     return input.replace(/\D/g, '');
