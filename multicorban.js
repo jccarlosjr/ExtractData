@@ -1,4 +1,5 @@
-const url = "https://raw.githubusercontent.com/jccarlosjr/ExtractData/main/exp.json";
+const url = "https://cdn.jsdelivr.net/gh/jccarlosjr/ExtractData@main/exp.json";
+
 
 try {
     const response = await fetch(url, { cache: "no-store" });
